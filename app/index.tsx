@@ -1,22 +1,23 @@
-import { Canvas } from "@react-three/fiber/native";
-import React, { useState } from "react";
-import { Button, View } from "react-native";
+import React from "react";
+import { ScrollView } from "react-native";
 
 import { Burger } from "@/components/burger";
+import { CardMenu } from "@/components/cardMenu";
+import { menu } from "@/constants/menu";
 
-export default function App() {
-  const [editing, setEditing] = useState(true);
-
+export default function Index() {
   return (
-    <View style={{ flex: 1 }}>
-      <Canvas>
-        <Burger editing={editing} />
-      </Canvas>
-
-      <Button
-        onPress={() => setEditing((prev) => !prev)}
-        title={`editing = ${editing}`}
-      />
-    </View>
+    <ScrollView style={{ flex: 1 }}>
+      <CardMenu.container>
+        {menu.map((item) => (
+          <CardMenu.card
+            id={item.id}
+            name={item.itemName}
+            price={item.basePrice}
+            itemModel={<Burger ingredients={item.ingredientList} />}
+          />
+        ))}
+      </CardMenu.container>
+    </ScrollView>
   );
 }

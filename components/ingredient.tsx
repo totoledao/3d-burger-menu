@@ -1,6 +1,6 @@
 import { useLoadModels } from "@/hooks/useLoadModels";
 import { Gltf } from "@react-three/drei/native";
-import { useFrame } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber/native";
 import { useRef } from "react";
 import { Group } from "three";
 
@@ -46,12 +46,12 @@ export function Ingredient({ name, offset, editing = false }: IngredientProps) {
       mesh.current.position.y >
       offset * animStates?.[editing ? "editing" : "notEditing"].offset.y
     )
-      mesh.current.position.y -= delta * animStates.speed.faster;
+      mesh.current.position.y -= delta * animStates.speed.faster * offset;
     if (
       mesh.current.position.y <
       offset * animStates?.[editing ? "editing" : "notEditing"].offset.y
     )
-      mesh.current.position.y += delta * animStates.speed.faster;
+      mesh.current.position.y += delta * animStates.speed.faster * offset;
     //ROT
     if (
       mesh.current.rotation.x >

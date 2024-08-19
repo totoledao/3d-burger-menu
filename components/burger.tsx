@@ -11,7 +11,8 @@ interface BurgerProps {
 
 export function Burger({
   ingredients = [ingredientName.Butter, ingredientName.Anchovies],
-  editing = true,
+  editing = false,
+  ...props
 }: BurgerProps) {
   return (
     <Suspense fallback={null}>
@@ -33,7 +34,7 @@ export function Burger({
           {ingredients.map((name, idx) => (
             <Ingredient
               editing={editing}
-              key={name + idx}
+              key={name.toString() + idx.toString()}
               name={name}
               offset={idx + 1}
             />

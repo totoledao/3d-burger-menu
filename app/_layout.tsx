@@ -1,9 +1,18 @@
-import { Stack } from "expo-router";
+import { colors } from "@/constants/colors";
+import { Slot } from "expo-router";
+import { StatusBar, View } from "react-native";
 
-export default function RootLayout() {
+export default function Layout() {
   return (
-    <Stack>
-      <Stack.Screen name="index" />
-    </Stack>
+    <View
+      style={{ flex: 1, paddingTop: 48, backgroundColor: colors.background }}
+    >
+      <StatusBar
+        barStyle={"light-content"}
+        backgroundColor="transparent"
+        translucent
+      />
+      <Slot />
+    </View>
   );
 }
