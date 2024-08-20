@@ -6,9 +6,7 @@ export default function Layout() {
   LogBox.ignoreLogs(["Cannot read property 'trim' of undefined"]);
 
   return (
-    <View
-      style={{ flex: 1, paddingTop: 48, backgroundColor: colors.background }}
-    >
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <StatusBar
         barStyle={"light-content"}
         backgroundColor="transparent"

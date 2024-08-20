@@ -1,8 +1,21 @@
-import { colors } from "@/constants/colors";
 import { Canvas } from "@react-three/fiber/native";
 import { Href, Link } from "expo-router";
 import React, { ReactNode } from "react";
-import { Pressable, StyleSheet, Text, View, ViewProps } from "react-native";
+import {
+  Dimensions,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  ViewProps,
+} from "react-native";
+
+import { Button } from "@/components/ui/button";
+import { colors } from "@/constants/colors";
+
+const screen = Dimensions.get("screen");
+const width = screen.width / 2;
+const height = screen.width / 1.5;
 
 interface CardProps {
   id: number;
@@ -18,11 +31,32 @@ function Card({ id, name, price, itemModel }: CardProps) {
       asChild
     >
       <Pressable style={styles.cardBG}>
-        <Canvas camera={{ position: [2, 1.5, 0] }}>{itemModel}</Canvas>
-        <Text>{name}</Text>
-        <Text style={{ color: colors.text.secondary, fontSize: 20 }}>
-          ${price}
-        </Text>
+        <Button width={width} height={height}>
+          <Canvas
+            style={{ flex: 1, marginTop: 24 }}
+            camera={{ position: [2, 1.5, 0] }}
+          >
+            {itemModel}
+          </Canvas>
+
+          <View
+            style={{
+              justifyContent: "flex-end",
+              paddingHorizontal: 40,
+              marginBottom: 40,
+            }}
+          >
+            <Text style={{ fontWeight: "600" }}>{name}</Text>
+            <Text
+              style={{
+                color: colors.text.secondary,
+                fontSize: 20,
+              }}
+            >
+              ${price}
+            </Text>
+          </View>
+        </Button>
       </Pressable>
     </Link>
   );
@@ -42,11 +76,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 16,
-    padding: 16,
+    paddingBottom: 40,
   },
   cardBG: {
-    width: 180,
-    height: 200,
+    width: width,
+    height: height,
   },
 });
