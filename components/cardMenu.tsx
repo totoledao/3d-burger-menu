@@ -1,6 +1,12 @@
-import { Canvas } from "@react-three/fiber/native";
+import { Canvas, useFrame } from "@react-three/fiber/native";
 import { Href, Link } from "expo-router";
-import React, { ReactNode } from "react";
+import React, {
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   Dimensions,
   Pressable,
@@ -12,6 +18,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { colors } from "@/constants/colors";
+import { Group } from "three";
 
 const screen = Dimensions.get("screen");
 const width = screen.width / 2;
@@ -22,6 +29,38 @@ interface CardProps {
   name: string;
   price: number;
   itemModel: ReactNode;
+}
+
+function AnimationHandler({
+  itemModel,
+  pressed,
+}: {
+  itemModel: ReactNode;
+  pressed: boolean;
+}): ReactElement<any, any> {
+  const mesh = useRef<Group>(null);
+  const [wasPressed, setWasPressed] = useState(true);
+
+  let t: ReturnType<typeof setTimeout>;
+  useEffect(() => {
+    if (wasPressed) {
+      t = setTimeout(() => {
+        setWasPressed(false);
+      }, 500);
+    } else {
+      setWasPressed(true);
+    }
+
+    return () => clearTimeout(t);
+  }, [pressed]);
+
+  useFrame((_, delta) => {
+    if (mesh.current && wasPressed) {
+      mesh.current.rotation.y += delta * 3;
+    }
+  });
+
+  return <group ref={mesh}>{itemModel}</group>;
 }
 
 function Card({ id, name, price, itemModel }: CardProps) {
@@ -37,7 +76,7 @@ function Card({ id, name, price, itemModel }: CardProps) {
               style={{ flex: 1, marginTop: 24 }}
               camera={{ position: [2, 1.5, 0] }}
             >
-              {itemModel}
+              <AnimationHandler itemModel={itemModel} pressed={pressed} />
             </Canvas>
 
             <View
