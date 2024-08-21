@@ -1,6 +1,7 @@
 import { colors } from "@/constants/colors";
 import {
   Canvas,
+  Group,
   rect,
   RoundedRect,
   rrect,
@@ -12,10 +13,16 @@ import { View } from "react-native";
 interface ButtonProps {
   width: number;
   height: number;
+  pressed: boolean;
   children: React.ReactNode;
 }
 
-export function Button({ width, height, children }: ButtonProps) {
+export function Button({
+  width,
+  height,
+  pressed = false,
+  children,
+}: ButtonProps) {
   return (
     <View
       style={{
@@ -31,17 +38,38 @@ export function Button({ width, height, children }: ButtonProps) {
           left: 0,
         }}
       >
-        <Shadow dx={-6} dy={-6} blur={4} color={"#e6ffe0"} />
-        <Shadow dx={7} dy={7} blur={2} color={"#cfe6ca"} />
-
-        <RoundedRect
-          rect={rrect(
-            rect(width * 0.1, height * 0.1, width * 0.8, height * 0.8),
-            width * 0.1,
-            width * 0.1
+        <Group>
+          {!pressed && (
+            <>
+              <Shadow dx={-6} dy={-6} blur={4} color={"#e6ffe0"} />
+              <Shadow dx={7} dy={7} blur={2} color={"#cfe6ca"} />
+            </>
           )}
-          color={colors.background}
-        />
+
+          <RoundedRect
+            rect={rrect(
+              rect(width * 0.1, height * 0.1, width * 0.8, height * 0.8),
+              width * 0.1,
+              width * 0.1
+            )}
+            color={colors.background}
+          />
+        </Group>
+
+        {pressed && (
+          <>
+            <Shadow dx={-1} dy={-1} blur={1} color={"rgba(0,0,0,0.05)"} />
+            <Shadow dx={5} dy={5} blur={2} color={"#e6ffe0"} />
+            <RoundedRect
+              rect={rrect(
+                rect(width * 0.1, height * 0.1, width * 0.8, height * 0.8),
+                width * 0.1,
+                width * 0.1
+              )}
+              color={"#cfe6ca"}
+            />
+          </>
+        )}
       </Canvas>
       {children}
     </View>

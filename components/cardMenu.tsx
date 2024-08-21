@@ -28,35 +28,37 @@ function Card({ id, name, price, itemModel }: CardProps) {
   return (
     <Link
       href={`/item-order/burger/${id}` as Href<`/item-order/burger/${number}`>}
-      asChild
+      // asChild
     >
       <Pressable style={styles.cardBG}>
-        <Button width={width} height={height}>
-          <Canvas
-            style={{ flex: 1, marginTop: 24 }}
-            camera={{ position: [2, 1.5, 0] }}
-          >
-            {itemModel}
-          </Canvas>
+        {({ pressed }) => (
+          <Button width={width} height={height} pressed={pressed}>
+            <Canvas
+              style={{ flex: 1, marginTop: 24 }}
+              camera={{ position: [2, 1.5, 0] }}
+            >
+              {itemModel}
+            </Canvas>
 
-          <View
-            style={{
-              justifyContent: "flex-end",
-              paddingHorizontal: 40,
-              marginBottom: 40,
-            }}
-          >
-            <Text style={{ fontWeight: "600" }}>{name}</Text>
-            <Text
+            <View
               style={{
-                color: colors.text.secondary,
-                fontSize: 20,
+                justifyContent: "flex-end",
+                paddingHorizontal: 40,
+                marginBottom: 40,
               }}
             >
-              ${price}
-            </Text>
-          </View>
-        </Button>
+              <Text style={{ fontWeight: "600" }}>{name}</Text>
+              <Text
+                style={{
+                  color: colors.text.secondary,
+                  fontSize: 20,
+                }}
+              >
+                ${price}
+              </Text>
+            </View>
+          </Button>
+        )}
       </Pressable>
     </Link>
   );
