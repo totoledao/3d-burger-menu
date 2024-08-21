@@ -28,7 +28,7 @@ function Card({ id, name, price, itemModel }: CardProps) {
   return (
     <Link
       href={`/item-order/burger/${id}` as Href<`/item-order/burger/${number}`>}
-      // asChild
+      asChild
     >
       <Pressable style={styles.cardBG}>
         {({ pressed }) => (
