@@ -41,6 +41,14 @@ function Card({ id, name, price, itemModel }: CardProps) {
             </Canvas>
 
             <View
+              style={[
+                StyleSheet.absoluteFill,
+                //needed to intercept clicks on the Canvas properly
+                { backgroundColor: "transparent" },
+              ]}
+            />
+
+            <View
               style={{
                 justifyContent: "flex-end",
                 paddingHorizontal: 40,
