@@ -14,6 +14,7 @@ interface ButtonProps {
   width: number;
   height: number;
   pressed: boolean;
+  rounded?: boolean;
   children: React.ReactNode;
 }
 
@@ -21,8 +22,15 @@ export function Button({
   width,
   height,
   pressed = false,
+  rounded = false,
   children,
 }: ButtonProps) {
+  const bgRect = rrect(
+    rect(width * 0.1, height * 0.1, width * 0.8, height * 0.8),
+    rounded ? width : width * 0.1,
+    rounded ? width : width * 0.1
+  );
+
   return (
     <View
       style={{
@@ -41,33 +49,39 @@ export function Button({
         <Group>
           {!pressed && (
             <>
-              <Shadow dx={-6} dy={-6} blur={4} color={"#e6ffe0"} />
-              <Shadow dx={7} dy={7} blur={2} color={"#cfe6ca"} />
+              <Shadow
+                dx={-width * 0.02}
+                dy={-width * 0.02}
+                blur={4}
+                color={"#e6ffe0"}
+              />
+              <Shadow
+                dx={width * 0.03}
+                dy={width * 0.03}
+                blur={2}
+                color={"#cfe6ca"}
+              />
             </>
           )}
 
-          <RoundedRect
-            rect={rrect(
-              rect(width * 0.1, height * 0.1, width * 0.8, height * 0.8),
-              width * 0.1,
-              width * 0.1
-            )}
-            color={colors.background}
-          />
+          <RoundedRect rect={bgRect} color={colors.background} />
         </Group>
 
         {pressed && (
           <>
-            <Shadow dx={-1} dy={-1} blur={1} color={"rgba(0,0,0,0.05)"} />
-            <Shadow dx={5} dy={5} blur={2} color={"#e6ffe0"} />
-            <RoundedRect
-              rect={rrect(
-                rect(width * 0.1, height * 0.1, width * 0.8, height * 0.8),
-                width * 0.1,
-                width * 0.1
-              )}
-              color={"#cfe6ca"}
+            <Shadow
+              dx={-width * 0.02}
+              dy={-width * 0.02}
+              blur={1}
+              color={"rgba(0,0,0,0.05)"}
             />
+            <Shadow
+              dx={width * 0.005}
+              dy={width * 0.005}
+              blur={2}
+              color={"#e6ffe0"}
+            />
+            <RoundedRect rect={bgRect} color={"#cfe6ca"} />
           </>
         )}
       </Canvas>
